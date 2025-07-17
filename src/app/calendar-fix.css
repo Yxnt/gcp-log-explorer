@@ -1,0 +1,34 @@
+/* Calendar Grid Layout Fix for Static Build */
+.grid.grid-cols-7 {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+}
+
+/* Force Tailwind classes that might be purged */
+.grid-cols-7 {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+}
+
+.w-8 {
+  width: 2rem !important;
+}
+
+.h-8 {
+  height: 2rem !important;
+}
+
+/* Time picker specific selectors */
+[data-date-picker] .grid,
+[data-date-picker] .grid-cols-7,
+.time-picker .grid,
+.time-picker .grid-cols-7 {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+}
+
+/* Force any grid with 7 columns to display properly */
+.grid[class*="grid-cols-7"] {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+}

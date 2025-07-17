@@ -2,26 +2,108 @@
   "name": "gcp-log-explorer",
   "version": "0.1.0",
   "private": true,
+  "main": "main.js",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
+    "dev": "concurrently \"npm:next:dev\" \"npm:electron:dev\"",
+    "next:dev": "next dev",
+    "electron:dev": "wait-on http://localhost:3000 && electron .",
+    "build": "npm run next:build && npm run electron:build",
+    "build:start": "npm run next:build && npm run electron:start",
+    "build:mac": "npm run next:build && electron-builder --mac",
+    "build:win": "npm run next:build && electron-builder --win",
+    "build:linux": "npm run next:build && electron-builder --linux",
+    "build:all": "npm run next:build && electron-builder --mac --win --linux",
+    "next:build": "NODE_ENV=production next build && node fix-paths.js",
+    "electron:build": "electron-builder",
+    "electron:start": "NODE_ENV=production electron .",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "@google-cloud/logging": "^11.2.0",
+    "@google-cloud/resource-manager": "^6.2.0",
+    "@radix-ui/react-accordion": "^1.2.11",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-popover": "^1.1.14",
+    "@radix-ui/react-select": "^2.2.5",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@uiw/react-json-view": "^2.0.0-alpha.33",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "lucide-react": "^0.525.0",
+    "next": "15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.5"
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
+    "concurrently": "^9.2.0",
+    "electron": "^37.2.1",
+    "electron-builder": "^26.0.12",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4",
+    "tw-animate-css": "^1.3.5",
+    "typescript": "^5",
+    "wait-on": "^8.0.3"
+  },
+  "build": {
+    "appId": "com.example.gcplogexplorer",
+    "productName": "GCP Log Explorer",
+    "files": [
+      "main.js",
+      "preload.js",
+      "out/**/*"
+    ],
+    "extraResources":[
+      "src/app/calendar-fix.css",
+      "src/app/globals.css"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
