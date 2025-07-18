@@ -317,8 +317,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **[Wails Team](https://wails.io/)** - For the excellent Go + Web framework
 - **[Google Cloud](https://cloud.google.com/apis/docs/cloud-client-libraries)** - For comprehensive APIs and documentation
 - **[React & Next.js](https://nextjs.org/)** - For the modern frontend framework
-- **Tailwind CSS** - For beautiful, responsive styling
-- **Radix UI** - For accessible component primitives
+- **[Tailwind CSS](https://tailwindcss.com/)** - For beautiful, responsive styling
+- **[Radix UI](https://www.radix-ui.com/)** - For accessible component primitives
 
 ---
 
